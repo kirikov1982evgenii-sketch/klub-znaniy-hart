@@ -10,7 +10,7 @@ window.SITE_CONFIG = {
   "payPalEmail": "freelancerwok@mail.ru",
   "paymentApiUrl": "http://127.0.0.1:8766",
   "siteUrl": "http://localhost:8765",
-  "supportEmail": "freelancerwok@mail.ru",
+  "supportEmail": "supporthurt@gmail.com",
   "ownerEmail": "freelancerwok@mail.ru",
   "telegramBot": "https://t.me/uportbot",
   "telegramBotName": "uportbot"
