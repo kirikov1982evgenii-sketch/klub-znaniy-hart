@@ -4,7 +4,7 @@
   "private": true,
   "description": "HART Knowledge Club course catalog",
   "scripts": {
-    "build": "python scripts/gen_config.py",
+    "build": "python scripts/gen_config.py && python scripts/gen_sitemap.py",
     "i18n": "python build_i18n.py",
     "sitemap": "python scripts/gen_sitemap.py",
     "start": "python site_server.py"

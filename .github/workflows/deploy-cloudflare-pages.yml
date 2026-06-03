@@ -1,0 +1,49 @@
+# Deploy static site to Cloudflare Pages using GitHub Actions
+name: Deploy Cloudflare Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate config.js
+        env:
+          HART_SITE_URL: https://hart-club.ru
+          MARKET_PAYMENT_API: ${{ vars.MARKET_PAYMENT_API || 'https://eg1982.pythonanywhere.com' }}
+          HART_TELEGRAM_BOT_USERNAME: uportbot
+          MARKET_PAY_CARD: "2200702158761978"
+          MARKET_PAY_BANK: "Т-Банк"
+          MARKET_PAY_NAME: "Евгений"
+          MARKET_PRICE_RUB: "199"
+          MARKET_PRICE_USD: "4.99"
+          MARKET_SUPPORT_EMAIL: supporthurt@gmail.com
+          MARKET_OWNER_EMAIL: freelancerwok@mail.ru
+          MARKET_PAYPAL_EMAIL: freelancerwok@mail.ru
+        run: python scripts/gen_config.py
+
+      - name: Generate sitemap.xml
+        env:
+          HART_SITE_URL: https://hart-club.ru
+        run: python scripts/gen_sitemap.py
+
+      - name: Install Wrangler
+        run: npm install -g wrangler
+
+      - name: Deploy to Cloudflare Pages
+        env:
+          CF_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler pages deploy . --project-name hart-club

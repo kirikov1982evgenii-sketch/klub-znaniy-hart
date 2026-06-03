@@ -52,7 +52,7 @@
 
 | Поле | Значение |
 |------|----------|
-| Build command | `npm run build` или `python scripts/gen_config.py` |
+| Build command | `npm run build` или `python scripts/gen_config.py && python scripts/gen_sitemap.py` |
 | Build output directory | `/` (корень репозитория) |
 | Root directory | `/` |
 
@@ -71,9 +71,10 @@
 | `MARKET_SUPPORT_EMAIL` | ваша почта |
 | `MARKET_OWNER_EMAIL` | ваша почта |
 
-5. Deploy. Скрипт `gen_config.py` создаст `config.js` с правильными URL.
-6. Вернитесь в Render и обновите `HART_SITE_URL` и `MARKET_CORS_ORIGINS` на финальный URL Pages.
-7. **Redeploy** Cloudflare Pages (повторная сборка).
+5. Deploy. Скрипт `gen_config.py` создаст `config.js` с правильными URL, а `gen_sitemap.py` обновит `sitemap.xml`.
+6. Если вы запускаете деплой вручную, используйте `npx wrangler pages deploy . --project-name hart-club`, а не `npx wrangler deploy`.
+7. Вернитесь в Render и обновите `HART_SITE_URL` и `MARKET_CORS_ORIGINS` на финальный URL Pages.
+8. **Redeploy** Cloudflare Pages (повторная сборка).
 
 ---
 
